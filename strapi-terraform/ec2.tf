@@ -55,4 +55,4 @@ resource "aws_instance" "strapi_ec2" {
     Name = "StrapiEC2"
   }
 }
- 
+
