@@ -42,3 +42,4 @@ docker build -t strapi-app .
 =======
 # Task-6
 >>>>>>> 893bd1a1cb49c30cdfa3f4290930f64dc8155a82
+# trigger
