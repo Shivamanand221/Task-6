@@ -7,7 +7,7 @@ resource "aws_key_pair" "deployer" {
 
 # Security group allowing SSH and Strapi access
 resource "aws_security_group" "strapi_sg" {
-  name        = "strapi-sg"
+  name        = "strapi_sg"
   description = "Allow SSH and Strapi access"
   vpc_id      = aws_vpc.main.id
 
@@ -55,3 +55,4 @@ resource "aws_instance" "strapi_ec2" {
     Name = "StrapiEC2"
   }
 }
+ 
