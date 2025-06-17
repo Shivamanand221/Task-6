@@ -41,13 +41,13 @@ resource "aws_security_group" "strapi_sg" {
 
 # EC2 instance
 resource "aws_instance" "strapi_ec2" {
-  ami                    = "ami-01f5a0b78d6089704" # Amazon Linux 2 AMI
-  instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.public.id
-  vpc_security_group_ids = [aws_security_group.strapi_sg.id]
+  ami                         = "ami-01f5a0b78d6089704" # Amazon Linux 2 AMI
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.public.id
+  vpc_security_group_ids      = [aws_security_group.strapi_sg.id]
   associate_public_ip_address = true
 
-  key_name               = aws_key_pair.deployer.key_name
+  key_name = aws_key_pair.deployer.key_name
 
   user_data = file("user-data.sh")
 
