@@ -30,11 +30,15 @@ module.exports = ({ env }) => {
 
   // console.log('Client value:', client);
   // console.log('Resolved config:', connections[client]);
+  if (!selected) {
+    console.error(`❌ Invalid DATABASE_CLIENT: ${client}`);
+    process.exit(1); // crash early with meaningful error
+  }
 
   return {
     connection: {
       client,
-      ...connections[client],
+      ...selected,
       //acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
     },
   };
