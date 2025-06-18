@@ -3,7 +3,7 @@ resource "aws_ecs_cluster" "strapi" {
 }
 
 resource "aws_cloudwatch_log_group" "ecs_strapi" {
-  name              = "/ecs/strapi"
+  name = "/ecs/strapi"
 }
 
 resource "aws_ecs_task_definition" "strapi" {
@@ -29,16 +29,16 @@ resource "aws_ecs_task_definition" "strapi" {
       logConfiguration = {
       logDriver = "awslogs"
       options = {
-        awslogs-group         = "aws_cloudwatch_log_group.ecs_strapi.name"
+        awslogs-group         = data.aws_cloudwatch_log_group.ecs_strapi.name
         awslogs-region        = "us-east-1"
         awslogs-stream-prefix = "ecs"
       }
     }
     }
   ])
-  depends_on = [
-      aws_cloudwatch_log_group.ecs_strapi
-  ]
+  # depends_on = [
+  #     aws_cloudwatch_log_group.ecs_strapi
+  # ]
 }
 resource "aws_ecs_service" "strapi" {
   name            = "strapi-service"
