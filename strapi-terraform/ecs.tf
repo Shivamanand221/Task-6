@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "strapi" {
         value = "production"
       },
       {
-        name  = "JWT_SECRET"
+        name  = "ADMIN_JWT_SECRET"
         value = "Jxzshlt7HKg0ZxNhoGJthA=="
       },
       {
