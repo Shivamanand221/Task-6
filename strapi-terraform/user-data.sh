@@ -6,4 +6,4 @@ systemctl enable docker
 usermod -aG docker ec2-user
 # Pull and run Strapi container 
 sudo docker pull shivamanand221/strapi:latest
-sudo docker run -d --env-file /home/ec2-user/.env -p 1337:1337 shivamanand221/strapi:latest
+sudo docker run -d -p 1337:1337 shivamanand221/strapi:latest
