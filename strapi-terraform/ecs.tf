@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "strapi" {
       },
       {
         "name": "DATABASE_HOST",
-        "value": "strapi"
+        "value": "strapi_postgres"
       },
       {
         "name": "DATABASE_PORT",
