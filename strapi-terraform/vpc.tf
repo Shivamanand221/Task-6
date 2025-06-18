@@ -1,5 +1,7 @@
 # Create a custom VPC
 resource "aws_vpc" "main" {
+
+  # default = true
   cidr_block = "10.0.0.0/16"
 
   tags = {
