@@ -6,7 +6,6 @@ resource "aws_ecs_cluster" "strapi" {
 #   name = "/ecs/strapi"
 # }
 
-
 resource "aws_ecs_task_definition" "strapi" {
   family                   = "strapi-task"
   requires_compatibilities = ["FARGATE"]
