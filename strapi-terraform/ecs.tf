@@ -2,10 +2,6 @@ resource "aws_ecs_cluster" "strapi" {
   name = "strapi-cluster"
 }
 
-# resource "aws_cloudwatch_log_group" "ecs_strapi" {
-#   name = "/ecs/strapi"
-# }
-
 resource "aws_ecs_task_definition" "strapi" {
   family                   = "strapi-task"
   requires_compatibilities = ["FARGATE"]
