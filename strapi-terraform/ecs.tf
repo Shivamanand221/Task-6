@@ -11,7 +11,6 @@ resource "aws_cloudwatch_log_group" "ecs_strapi" {
   }
 }
 
-
 resource "aws_ecs_task_definition" "strapi" {
   family                   = "strapi-task"
   requires_compatibilities = ["FARGATE"]
@@ -44,7 +43,6 @@ resource "aws_ecs_task_definition" "strapi" {
     }
   ])
 }
-
 resource "aws_ecs_service" "strapi" {
   name            = "strapi-service"
   cluster         = aws_ecs_cluster.strapi.id
