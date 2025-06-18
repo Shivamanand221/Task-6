@@ -5,8 +5,6 @@ services:
     build:
       context: .
     container_name: strapi_app
-    env_file:
-      - .env 
     environment:
       DATABASE_CLIENT: postgres
       DATABASE_NAME: strapi
@@ -14,6 +12,10 @@ services:
       DATABASE_PORT: 5432
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
+      ADMIN_JWT_SECRET: Jxzshlt7HKg0ZxNhoGJthA==
+      API_TOKEN_SALT: 8xZ6eR8Y0F6J12xas+5LHg==
+      TRANSFER_TOKEN_SALT: BmKOus2oWxIJMY9DUf5eXA==
+      ENCRYPTION_KEY: Ob0xsmOsx4WrAL4Ta7xsFsHyvChDyN9Y1ohyTHU728w=
     ports:
       - "1337:1337"
     networks:

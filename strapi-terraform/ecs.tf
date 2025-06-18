@@ -24,6 +24,30 @@ resource "aws_ecs_task_definition" "strapi" {
       ]
       environment = [
       {
+        "name": "DATABASE_CLIENT",
+        "value": "postgres"
+      },
+      {
+        "name": "DATABASE_HOST",
+        "value": "strapi"
+      },
+      {
+        "name": "DATABASE_PORT",
+        "value": "5432"
+      },
+      {
+        "name": "DATABASE_NAME",
+        "value": "strapi"
+      },
+      {
+        "name": "DATABASE_USERNAME",
+        "value": "strapi"
+      },
+      {
+        "name": "DATABASE_PASSWORD",
+        "value": "strapi"
+      },
+      {
         name  = "APP_KEYS"
         value = "d16c3ea9e3948146a15d1ea543538fa4e67e8437aaae6a14f34986a308ba8cd9,f1a9d2a9c32207a3499485ff66c6af6862a1080cba8e5999dbd9d31d2f69d82c"
       },
