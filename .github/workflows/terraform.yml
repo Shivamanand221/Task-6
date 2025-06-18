@@ -23,7 +23,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t $DOCKER_IMAGE:$TAG ./strapi-app
+        docker build -t $DOCKER_IMAGE:$TAG .
         docker push $DOCKER_IMAGE:$TAG
 
     - name: Configure AWS credentials
