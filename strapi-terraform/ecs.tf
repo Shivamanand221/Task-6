@@ -22,6 +22,14 @@ resource "aws_ecs_task_definition" "strapi" {
           protocol      = "tcp"
         }
       ]
+      logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = "/ecs/strapi"
+        awslogs-region        = "us-east-1"
+        awslogs-stream-prefix = "ecs"
+      }
+    }
     }
   ])
 }
@@ -39,7 +47,7 @@ resource "aws_ecs_service" "strapi" {
     security_groups  = [aws_security_group.ecs.id]
   }
 
-  # depends_on = [
-  #   aws_iam_role_policy_attachment.ecs_task_policy_attach
-  # ]
+  depends_on = [
+    aws_iam_role_policy_attachment.ecs_task_policy_attach
+  ]
 }
