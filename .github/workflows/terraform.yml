@@ -1,57 +1,107 @@
-name: Terraform CI/CD
+# name: Terraform CI/CD
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+
+# jobs:
+#   terraform:
+#     name: 'Terraform Apply'
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       - name: Set up Terraform
+#         uses: hashicorp/setup-terraform@v3
+#         with:
+#           terraform_version: 1.7.5
+
+#       - name: Create SSH Public Key File
+#         run: |
+#           echo "$DEPLOYER_KEY_PUB_BASE64" | base64 -d > strapi-terraform/deployer-key.pub
+#         env:
+#           DEPLOYER_KEY_PUB_BASE64: ${{ secrets.DEPLOYER_KEY_PUB_BASE64 }}
+
+
+#       - name: Terraform Init
+#         run: terraform init
+#         working-directory: ./strapi-terraform
+#         env:
+#             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+#       - name: Terraform Format Check
+#         run: terraform fmt -check
+#         working-directory: ./strapi-terraform
+
+#       - name: Terraform Validate
+#         run: terraform validate
+#         working-directory: ./strapi-terraform
+
+#       - name: Terraform Plan
+#         run: terraform plan
+#         working-directory: ./strapi-terraform
+#         env:
+#             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+#       - name: Terraform Apply
+#         run: terraform apply -auto-approve
+#         working-directory: ./strapi-terraform
+#         env:
+#             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+name: Deploy to ECS Fargate
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
+    branches: [main]
 
 jobs:
-  terraform:
-    name: 'Terraform Apply'
+  deploy:
+    name: Build & Deploy Strapi to ECS
     runs-on: ubuntu-latest
 
+    env:
+      AWS_REGION: us-east-1
+      ECR_REPO: strapi
+      ECS_CLUSTER: strapi-cluster
+      ECS_SERVICE: strapi-service
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.7.5
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
 
-      - name: Create SSH Public Key File
-        run: |
-          echo "$DEPLOYER_KEY_PUB_BASE64" | base64 -d > strapi-terraform/deployer-key.pub
-        env:
-          DEPLOYER_KEY_PUB_BASE64: ${{ secrets.DEPLOYER_KEY_PUB_BASE64 }}
+    - name: Login to Amazon ECR
+      run: |
+        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin <your_account_id>.dkr.ecr.$AWS_REGION.amazonaws.com
 
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t $ECR_REPO ./strapi-app
+        docker tag $ECR_REPO:latest 607700977843.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest
+        docker push 607700977843.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest
 
-      - name: Terraform Init
-        run: terraform init
-        working-directory: ./strapi-terraform
-        env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Terraform Init
+      working-directory: ./strapi-terraform
+      run: terraform init
 
-      - name: Terraform Format Check
-        run: terraform fmt -check
-        working-directory: ./strapi-terraform
+    - name: Terraform Plan
+      working-directory: ./strapi-terraform
+      run: terraform plan
 
-      - name: Terraform Validate
-        run: terraform validate
-        working-directory: ./strapi-terraform
-
-      - name: Terraform Plan
-        run: terraform plan
-        working-directory: ./strapi-terraform
-        env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-        working-directory: ./strapi-terraform
-        env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Terraform Apply
+      working-directory: ./strapi-terraform
+      run: terraform apply -auto-approve
