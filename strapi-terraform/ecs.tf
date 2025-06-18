@@ -2,8 +2,8 @@ resource "aws_ecs_cluster" "strapi" {
   name = "strapi-cluster"
 }
 
-data "aws_cloudwatch_log_group" "ecs_strapi" {
-  name = "/ecs/strapi"
+resource "aws_cloudwatch_log_group" "ecs_strapi" {
+  name              = "/ecs/strapi"
 }
 
 resource "aws_ecs_task_definition" "strapi" {
@@ -25,11 +25,11 @@ resource "aws_ecs_task_definition" "strapi" {
           hostPort      = 1337
           protocol      = "tcp"
         }
-      ] 
+      ]
       logConfiguration = {
       logDriver = "awslogs"
       options = {
-        awslogs-group         = data.aws_cloudwatch_log_group.ecs_strapi.name
+        awslogs-group         = "aws_cloudwatch_log_group.ecs_strapi.name"
         awslogs-region        = "us-east-1"
         awslogs-stream-prefix = "ecs"
       }
@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "strapi" {
     }
   ])
   depends_on = [
-    aws_cloudwatch_log_group.ecs_strapi
+      aws_cloudwatch_log_group.ecs_strapi
   ]
 }
 resource "aws_ecs_service" "strapi" {
