@@ -3,7 +3,6 @@
 #   value       = aws_instance.strapi_ec2.public_ip
 # }
 
-
 output "strapi_task_arn" {
   value = aws_ecs_task_definition.strapi.arn
 }
