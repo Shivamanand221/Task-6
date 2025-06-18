@@ -9,6 +9,10 @@ resource "aws_cloudwatch_log_group" "ecs_strapi" {
   tags = {
     Name = "strapi-log-group"
   }
+  lifecycle {
+    prevent_destroy = false
+    ignore_changes  = [name]
+  }
 }
 
 resource "aws_ecs_task_definition" "strapi" {
