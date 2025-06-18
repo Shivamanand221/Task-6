@@ -30,9 +30,6 @@ module.exports = ({ env }) => {
 
   // console.log('Client value:', client);
   // console.log('Resolved config:', connections[client]);
-  console.log('ENV DATABASE_CLIENT =', client);
-  console.log('Connections object:', Object.keys(connections));
-  console.log('Resolved config:', connections[client]);
 
   return {
     connection: {

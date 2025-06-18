@@ -4,7 +4,9 @@ services:
   strapi_app:
     build:
       context: .
+      dockerfile: Dockerfile
     container_name: strapi_app
+    env_file: .env
     environment:
       DATABASE_CLIENT: postgres
       DATABASE_NAME: strapi
@@ -16,6 +18,13 @@ services:
       API_TOKEN_SALT: 8xZ6eR8Y0F6J12xas+5LHg==
       TRANSFER_TOKEN_SALT: BmKOus2oWxIJMY9DUf5eXA==
       ENCRYPTION_KEY: Ob0xsmOsx4WrAL4Ta7xsFsHyvChDyN9Y1ohyTHU728w=
+    volumes:
+          - ./src/config:/opt/app/config
+          - ./src/src:/opt/app/src
+          - ./src/package.json:/opt/package.json
+          - ./src/yarn.lock:/opt/yarn.lock
+          - ./.env:/opt/app/.env
+          - ./src/public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
     networks:
@@ -33,9 +42,11 @@ services:
       POSTGRES_PASSWORD: strapi
     volumes:
       - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - strapi-net
-
+  
   nginx:
     image: nginx:alpine
     container_name: strapi_nginx
