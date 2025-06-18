@@ -36,9 +36,30 @@ resource "aws_ecs_task_definition" "strapi" {
         value = "production"
       },
       {
-    name  = "JWT_SECRET"
-    value = "Jxzshlt7HKg0ZxNhoGJthA=="
-  }
+        name  = "JWT_SECRET"
+        value = "Jxzshlt7HKg0ZxNhoGJthA=="
+      },
+      {
+        name  = "API_TOKEN_SALT"
+        value = "8xZ6eR8Y0F6J12xas+5LHg=="
+      },
+      {
+        name  = "TRANSFER_TOKEN_SALT"
+        value = "BmKOus2oWxIJMY9DUf5eXA=="
+      },
+      {
+        name  = "ENCRYPTION_KEY"
+        value = "Ob0xsmOsx4WrAL4Ta7xsFsHyvChDyN9Y1ohyTHU728w="
+      },
+      {
+        name  = "FLAG_NPS"
+        value = "true"
+      },
+      {
+        name  = "FLAG_PROMOTE_EE"
+        value = "true"
+      }
+
     ]
       logConfiguration = {
       logDriver = "awslogs"
