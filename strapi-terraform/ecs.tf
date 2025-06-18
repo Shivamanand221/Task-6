@@ -34,7 +34,11 @@ resource "aws_ecs_task_definition" "strapi" {
       {
         name  = "NODE_ENV"
         value = "production"
-      }
+      },
+      {
+    name  = "JWT_SECRET"
+    value = "Jxzshlt7HKg0ZxNhoGJthA=="
+  }
     ]
       logConfiguration = {
       logDriver = "awslogs"
