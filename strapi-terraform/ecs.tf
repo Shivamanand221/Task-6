@@ -2,6 +2,16 @@ resource "aws_ecs_cluster" "strapi" {
   name = "strapi-cluster"
 }
 
+resource "aws_cloudwatch_log_group" "ecs_strapi" {
+  name              = "/ecs/strapi"
+  retention_in_days = 1
+
+  tags = {
+    Name = "strapi-log-group"
+  }
+}
+
+
 resource "aws_ecs_task_definition" "strapi" {
   family                   = "strapi-task"
   requires_compatibilities = ["FARGATE"]
@@ -26,7 +36,7 @@ resource "aws_ecs_task_definition" "strapi" {
       logConfiguration = {
       logDriver = "awslogs"
       options = {
-        awslogs-group         = "/ecs/strapi"
+        awslogs-group         = "aws_cloudwatch_log_group.ecs_strapi.name"
         awslogs-region        = "us-east-1"
         awslogs-stream-prefix = "ecs"
       }
