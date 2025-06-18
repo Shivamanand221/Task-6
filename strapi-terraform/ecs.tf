@@ -45,6 +45,9 @@ resource "aws_ecs_task_definition" "strapi" {
     }
     }
   ])
+  depends_on = [
+    aws_cloudwatch_log_group.ecs_strapi
+  ]
 }
 resource "aws_ecs_service" "strapi" {
   name            = "strapi-service"
