@@ -22,21 +22,8 @@ resource "aws_ecs_task_definition" "strapi" {
           protocol      = "tcp"
         }
       ]
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-group         = "/ecs/strapi"
-          awslogs-region        = "us-east-1"
-          awslogs-stream-prefix = "ecs"
-        }
-      }
     }
   ])
-}
-
-resource "aws_cloudwatch_log_group" "ecs_strapi" {
-  name              = "/ecs/strapi"
-  retention_in_days = 7
 }
 
 resource "aws_ecs_service" "strapi" {
