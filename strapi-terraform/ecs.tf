@@ -39,7 +39,7 @@ resource "aws_ecs_service" "strapi" {
     security_groups  = [aws_security_group.ecs.id]
   }
 
-  depends_on = [
-    aws_iam_role_policy_attachment.ecs_task_policy_attach
-  ]
+  # depends_on = [
+  #   aws_iam_role_policy_attachment.ecs_task_policy_attach
+  # ]
 }
