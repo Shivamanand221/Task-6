@@ -1,16 +1,16 @@
 console.log("✅ Reached database.js file"); 
 
 module.exports = ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'postgres');
+  const client = env('DATABASE_CLIENT');
 
   const connections = {
     postgres: {
       connection: {
-        host: env('DATABASE_HOST', 'strapi_postgres'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
+        host: env('DATABASE_HOST'),
+        port: env.int('DATABASE_PORT'),
+        database: env('DATABASE_NAME'),
+        user: env('DATABASE_USERNAME'),
+        password: env('DATABASE_PASSWORD'),
         ssl: false,
         schema: env('DATABASE_SCHEMA', 'public'),
       },
