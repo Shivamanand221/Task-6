@@ -51,6 +51,13 @@ export default ({ env }) => {
     },
   };
 
+console.log("✅ Reached database.js");
+console.log("🌐 DATABASE_CLIENT =", process.env.DATABASE_CLIENT);
+console.log("🌐 DATABASE_HOST =", process.env.DATABASE_HOST);
+console.log("🌐 DATABASE_NAME =", process.env.DATABASE_NAME);
+console.log("🌐 DATABASE_USERNAME =", process.env.DATABASE_USERNAME);
+console.log("🌐 DATABASE_PASSWORD =", process.env.DATABASE_PASSWORD);
+
   return {
     connection: {
       client,
