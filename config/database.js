@@ -1,4 +1,4 @@
-const path = require('path');
+console.log("✅ Reached database.js file"); 
 
 module.exports = ({ env }) => {
   const client = postgres;
