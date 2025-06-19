@@ -1,3 +1,8 @@
+resource "aws_ecs_cluster" "strapi" {
+  name = "strapi-cluster"
+}
+
+
 resource "aws_ecs_task_definition" "postgres" {
   family                   = "postgres-task"
   requires_compatibilities = ["FARGATE"]
@@ -68,6 +73,25 @@ resource "aws_ecs_task_definition" "strapi" {
     }
   ])
 }
+
+resource "aws_ecs_service" "strapi" {
+  name            = "strapi-service"
+  cluster         = aws_ecs_cluster.strapi.id
+  launch_type     = "FARGATE"
+  desired_count   = 1
+  task_definition = aws_ecs_task_definition.strapi.arn
+
+  network_configuration {
+    subnets         = [aws_subnet.public.id] # ya jitni bhi public subnets hain
+    assign_public_ip = true
+    security_groups  = [aws_security_group.ecs.id]
+  }
+
+  depends_on = [
+    aws_ecs_task_definition.strapi
+  ]
+}
+
 
 resource "aws_service_discovery_private_dns_namespace" "ecs" {
   name        = "ecs.local"
