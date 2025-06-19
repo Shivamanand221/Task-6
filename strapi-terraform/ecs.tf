@@ -106,48 +106,6 @@ resource "aws_ecs_task_definition" "strapi" {
     }
   ])
 }
-
-resource "aws_ecs_task_definition" "postgres" {
-  family                   = "postgres-task"
-  requires_compatibilities = ["FARGATE"]
-  network_mode             = "awsvpc"
-  cpu                      = "512"
-  memory                   = "1024"
-  execution_role_arn       = data.aws_iam_role.ecs_task_execution.arn
-
-  container_definitions = jsonencode([
-    {
-      name      = "postgres"
-      image     = "postgres:14"
-      essential = true
-      portMappings = [
-        {
-          containerPort = 5432
-        }
-      ],
-      environment = [
-        { name = "POSTGRES_DB", value = "strapi" },
-        { name = "POSTGRES_USER", value = "strapi" },
-        { name = "POSTGRES_PASSWORD", value = "strapi" }
-      ]
-    }
-  ])
-}
-
-resource "aws_ecs_service" "postgres" {
-  name            = "postgres-service"
-  cluster         = aws_ecs_cluster.strapi.id
-  launch_type     = "FARGATE"
-  desired_count   = 1
-  task_definition = aws_ecs_task_definition.postgres.arn
-
-  network_configuration {
-    subnets         = [aws_subnet.public.id]
-    assign_public_ip = true
-    security_groups  = [aws_security_group.ecs.id]
-  }
-}
-
 resource "aws_ecs_service" "strapi" {
   name            = "strapi-service"
   cluster         = aws_ecs_cluster.strapi.id
