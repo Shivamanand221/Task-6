@@ -1,4 +1,3 @@
-# Dockerfile
 FROM node:18
 
 # Set working directory
@@ -7,7 +6,6 @@ WORKDIR /app
 # Copy app files
 COPY . .
 COPY config/database.js ./config/database.js
-
 
 # Install dependencies
 RUN npm install

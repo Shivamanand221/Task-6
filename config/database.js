@@ -29,7 +29,6 @@ module.exports = ({ env }) => {
     },
   };
 
-
   const config = connections[client];
   if (!config) {
     throw new Error(`Database client "${client}" is not supported.`);
