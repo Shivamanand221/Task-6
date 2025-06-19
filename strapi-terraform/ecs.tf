@@ -106,6 +106,7 @@ resource "aws_ecs_task_definition" "strapi" {
     }
   ])
 }
+
 resource "aws_ecs_service" "strapi" {
   name            = "strapi-service"
   cluster         = aws_ecs_cluster.strapi.id
