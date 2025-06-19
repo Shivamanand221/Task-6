@@ -12,6 +12,17 @@ resource "aws_ecs_task_definition" "strapi" {
 
   container_definitions = jsonencode([
     {
+    name      = "strapi_postgres",
+    image     = "postgres:latest",
+    essential = false,
+    portMappings = [{ containerPort = 5432 }],
+    environment = [
+      { name = "POSTGRES_USER", value = "strapi" },
+      { name = "POSTGRES_PASSWORD", value = "strapi" },
+      { name = "POSTGRES_DB", value = "strapi" }
+    ]
+    },
+    {
       name      = "strapi"
       image     = "shivamanand221/strapi:latest"
       essential = true
