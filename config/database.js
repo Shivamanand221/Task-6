@@ -1,7 +1,7 @@
 console.log("✅ Reached database.js file"); 
 
 module.exports = ({ env }) => {
-  const client = postgres;
+  const client = env('DATABASE_CLIENT', 'postgres');
 
   const connections = {
     postgres: {
@@ -11,14 +11,15 @@ module.exports = ({ env }) => {
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
-        },
+        ssl: false,
+        // && {
+          // key: env('DATABASE_SSL_KEY', undefined),
+          // cert: env('DATABASE_SSL_CERT', undefined),
+          // ca: env('DATABASE_SSL_CA', undefined),
+          // capath: env('DATABASE_SSL_CAPATH', undefined),
+          // cipher: env('DATABASE_SSL_CIPHER', undefined),
+          // rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
+        // },
         schema: env('DATABASE_SCHEMA', 'public'),
       },
       pool: {
@@ -28,13 +29,14 @@ module.exports = ({ env }) => {
     },
   };
 
-  console.log('✅ Loaded DATABASE_CLIENT:', client);
-  console.log('✅ Using connection config:', config);
 
   const config = connections[client];
   if (!config) {
     throw new Error(`Database client "${client}" is not supported.`);
   }
+
+  console.log('✅ Loaded DATABASE_CLIENT:', client);
+  console.log('✅ Using connection config:', config);
 
   return {
     connection: {
