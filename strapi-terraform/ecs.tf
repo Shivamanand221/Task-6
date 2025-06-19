@@ -56,8 +56,12 @@ resource "aws_ecs_task_definition" "strapi" {
         value = "production"
       },
       {
+        name  = "JWT_SECRET"
+        value = "UGQ+Qlr3M1wKG/nDQcJ3gaEYUttK+LdRWA6YUkvLxZ8="
+      },
+      {
         name  = "ADMIN_JWT_SECRET"
-        value = "Jxzshlt7HKg0ZxNhoGJthA=="
+        value = "Whgm/ztYqo4TRI5hby2TYdxAR9AadGlqoAPmd0zFfuQ="
       },
       {
         name  = "API_TOKEN_SALT"
