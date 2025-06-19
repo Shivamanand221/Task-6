@@ -33,6 +33,7 @@ resource "aws_ecs_task_definition" "strapi" {
           protocol      = "tcp"
         }
       ]
+      
       environment = [
       {
         "name": "DATABASE_CLIENT",
