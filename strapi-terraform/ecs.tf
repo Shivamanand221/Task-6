@@ -94,7 +94,6 @@ resource "aws_ecs_task_definition" "strapi" {
         name  = "FLAG_PROMOTE_EE"
         value = "true"
       }
-
     ]
       logConfiguration = {
       logDriver = "awslogs"
