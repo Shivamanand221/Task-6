@@ -117,7 +117,8 @@ resource "aws_ecs_service" "strapi" {
     capacity_provider = "FARGATE_SPOT"
     weight            = 1
   }
-
+  
+  
   network_configuration {
     subnets          = [aws_subnet.public.id]
     assign_public_ip = true
