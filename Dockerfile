@@ -5,7 +5,6 @@ WORKDIR /app
 
 # Copy app files
 COPY . .
-COPY config/database.js ./config/database.js
 
 # Install dependencies
 RUN npm install

@@ -37,6 +37,18 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  
+  nginx:
+    image: nginx:alpine
+    container_name: strapi_nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - strapi_app
+    networks:
+      - strapi-net
 
 volumes:
   pgdata:
