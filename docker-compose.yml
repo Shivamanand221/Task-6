@@ -23,7 +23,7 @@ services:
     depends_on:
       - strapi_postgres
     volumes:
-      - ./public:/app/public
+      - ./app:/srv/app
 
   strapi_postgres:
     image: postgres:15
